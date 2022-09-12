@@ -38,6 +38,7 @@ jobs:
     name: Tag version
     runs-on: ubuntu-latest
     needs: [tests]
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v3
 
