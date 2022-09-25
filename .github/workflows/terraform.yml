@@ -8,12 +8,12 @@ jobs:
     name: Run terraform fmt
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - uses: hashicorp/setup-terraform@v2
 
-      - name: Terraform fmt
+      - name: Run terraform fmt
         run: |
           terraform fmt -check -recursive -no-color -diff
 
@@ -21,12 +21,25 @@ jobs:
     name: Run terraform validate
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - uses: hashicorp/setup-terraform@v2
 
-      - name: Terraform validate
+      - name: Run terraform validate
         run: |
           terraform init -backend=false
           terraform validate
+
+  sec:
+    name: Run tfsec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run tfsec
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
+        with:
+          tfsec_args: --force-all-dirs
+          github_token: ${{ secrets.GITHUB_TOKEN }}
