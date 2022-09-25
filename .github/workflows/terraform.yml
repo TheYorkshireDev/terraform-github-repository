@@ -1,0 +1,32 @@
+name: Terraform
+
+on:
+  pull_request:
+
+jobs:
+  format:
+    name: Run terraform fmt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform fmt
+        run: |
+          terraform fmt -check -recursive -no-color -diff
+
+  validate:
+    name: Run terraform validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform validate
+        run: |
+          terraform init -backend=false
+          terraform validate
