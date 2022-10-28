@@ -15,7 +15,11 @@ Terraform Module for managing GitHub [Repositories](https://developer.github.com
   - [Author Information](#author-information)
   - [License](#license)
 
-## Requirements
+<!-- BEGIN_TF_DOCS -->
+
+<!-- END_TF_DOCS -->
+
+## Requirements2
 
 This module requires Terraform version `0.14.0` or newer.
 

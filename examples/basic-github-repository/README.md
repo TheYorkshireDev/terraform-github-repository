@@ -9,8 +9,7 @@ module "basic-github-repository" {
   source  = "TheYorkshireDev/repository/github"
   version = "~> 0.2.0"
 
-  name               = "basic-github-repository"
-  description        = "A description of the repository."
+  name = "basic-github-repository"
 }
 ```
 
