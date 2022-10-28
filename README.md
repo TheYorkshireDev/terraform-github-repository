@@ -16,6 +16,7 @@ Terraform Module for managing GitHub [Repositories](https://developer.github.com
   - [License](#license)
 
 <!-- BEGIN_TF_DOCS -->
+
 <!-- END_TF_DOCS -->
 
 ## Requirements2

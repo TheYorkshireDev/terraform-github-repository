@@ -56,4 +56,5 @@ jobs:
       with:
         working-dir: .
         fail-on-diff: true
+        output-file: README.md
         output-method: print
