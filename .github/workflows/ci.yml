@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      GITHUB_OWNER: project-manager-testing
+      GITHUB_OWNER: theyorkshiredev
 
     steps:
       - name: Checkout Repository
