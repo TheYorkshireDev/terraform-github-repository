@@ -1,3 +1,5 @@
-output "initial_output" {
-  value = "initial_output"
+module "github_repository" {
+  source = "../../"
+
+  name = var.repository_name
 }

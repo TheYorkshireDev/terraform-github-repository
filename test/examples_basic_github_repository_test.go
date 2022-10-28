@@ -26,7 +26,7 @@ func TestExamplesBasicGithubRepository(t *testing.T) {
 
 	// Apply the infrastructure
 	terraform.InitAndApply(t, terraformOptions)
-	actualRepositoryName := terraform.Output(t, terraformOptions, "repository_name")
+	actualRepositoryName := terraform.Output(t, terraformOptions, "name")
 	assert.Equal(t, repositoryName, actualRepositoryName)
 
 	// Run perpetual diff
