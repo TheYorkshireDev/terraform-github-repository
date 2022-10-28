@@ -17,7 +17,7 @@ func TestExamplesBasicGithubRepository(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../examples/basic-github-repository",
 		Vars: map[string]interface{}{
-			"name": repositoryName,
+			"repository_name": repositoryName,
 		},
 	})
 
@@ -26,7 +26,7 @@ func TestExamplesBasicGithubRepository(t *testing.T) {
 
 	// Apply the infrastructure
 	terraform.InitAndApply(t, terraformOptions)
-	actualRepositoryName := terraform.Output(t, terraformOptions, "name")
+	actualRepositoryName := terraform.Output(t, terraformOptions, "repository_name")
 	assert.Equal(t, repositoryName, actualRepositoryName)
 
 	// Run perpetual diff
