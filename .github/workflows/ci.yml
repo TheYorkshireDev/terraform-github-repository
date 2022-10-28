@@ -27,7 +27,7 @@ jobs:
     name: "Tests"
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.TOKEN }}
       GITHUB_OWNER: project-manager-testing
 
     steps:
