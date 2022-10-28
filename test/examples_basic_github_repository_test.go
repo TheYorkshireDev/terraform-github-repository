@@ -11,7 +11,7 @@ func TestExamplesBasicGithubRepository(t *testing.T) {
 	expectedOutput := "initial_output"
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/basic-github-repository",
+		TerraformDir: "../examples/basic-github-repository",
 	})
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
