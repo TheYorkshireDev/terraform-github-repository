@@ -1,4 +1,4 @@
-variable "repository_name" {
+variable "name" {
   type        = string
   description = "Name of Github Repository"
 }
