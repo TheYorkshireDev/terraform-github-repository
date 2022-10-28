@@ -55,6 +55,5 @@ jobs:
       uses: terraform-docs/gh-actions@main
       with:
         working-dir: .
+        indention: 3
         fail-on-diff: true
-        output-file: README.md
-        output-method: print
