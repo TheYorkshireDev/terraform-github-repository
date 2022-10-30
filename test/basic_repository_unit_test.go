@@ -12,13 +12,16 @@ const fixtureLocation = "fixtures/basic-repository"
 func TestUT_DefaultRepositoryProperties(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: fixtureLocation,
-		PlanFilePath: "./plan.out",
+		PlanFilePath: "./plan.output",
 	})
 
 	// Plan the infrastructure
-	plan := terraform.InitAndPlanAndShowWithStruct(t, terraformOptions)
+	planOutput := terraform.InitAndPlanAndShowWithStruct(t, terraformOptions)
 
-	private := plan.RawPlan.Variables["private"].Value
+	repositoryKey := "module.github_repository.github_repository.repository"
+	terraform.AssertPlannedValuesMapKeyExists(t, planOutput, repositoryKey)
+	repository := planOutput.ResourcePlannedValuesMap[repositoryKey]
 
-	assert.Equal(t, "true", private)
+	assert.Equal(t, true, repository.AttributeValues["private"])
+	assert.Equal(t, true, repository.AttributeValues["vulnerability_alerts"])
 }
