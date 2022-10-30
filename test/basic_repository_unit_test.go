@@ -1,7 +1,6 @@
 package test
 
 import (
-	"path/filepath"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -13,7 +12,7 @@ const fixtureLocation = "fixtures/basic-repository"
 func TestUT_DefaultRepositoryProperties(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: fixtureLocation,
-		PlanFilePath: filepath.Join(fixtureLocation, "plan.out"),
+		PlanFilePath: "./plan.out",
 	})
 
 	// Plan the infrastructure
