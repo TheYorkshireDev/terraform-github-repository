@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestInitialOutput(t *testing.T) {
+func TestUT_DefaultRepositoryProperties(t *testing.T) {
 	expectedOutput := "initial_output"
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{

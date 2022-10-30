@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestExamplesBasicGithubRepository(t *testing.T) {
+func TestIT_BasicGithubRepositoryExample(t *testing.T) {
 	faker := faker.New()
 
 	repositoryName := faker.RandomStringWithLength(8)
