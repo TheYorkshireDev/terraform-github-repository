@@ -15,6 +15,14 @@ Terraform Module for managing GitHub [Repositories](https://developer.github.com
   - [Author Information](#author-information)
   - [License](#license)
 
+## Import
+
+To import an existing Github repository so it can be controlled by the module run the following command specifying the repository name and the reference name of the module.
+
+```
+terraform import module.<module name>.github_repository.repository <Repository Name>
+```
+
 ## Requirements
 
 This module requires Terraform version `0.14.0` or newer.

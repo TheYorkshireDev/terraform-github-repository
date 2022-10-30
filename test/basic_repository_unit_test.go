@@ -22,6 +22,6 @@ func TestUT_DefaultRepositoryProperties(t *testing.T) {
 	terraform.AssertPlannedValuesMapKeyExists(t, planOutput, repositoryKey)
 	repository := planOutput.ResourcePlannedValuesMap[repositoryKey]
 
-	assert.Equal(t, true, repository.AttributeValues["private"])
+	assert.Equal(t, "private", repository.AttributeValues["visibility"])
 	assert.Equal(t, true, repository.AttributeValues["vulnerability_alerts"])
 }
