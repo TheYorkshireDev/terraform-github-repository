@@ -54,10 +54,15 @@ jobs:
         run: |
           go mod download
 
-      - name: Run Tests
+      - name: Run Unit Tests
         working-directory: test
         run: |
           gotestsum --format testname -- -run TestUT_ -v
+
+      - name: Run Integration Tests
+        working-directory: test
+        run: |
+          gotestsum --format testname -- -run TestIT_ -v
 
   tag:
     name: Tag version
