@@ -1,15 +1,19 @@
 package test
 
 import (
+	"path/filepath"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 )
 
+const fixtureLocation = "fixtures/basic-repository"
+
 func TestUT_DefaultRepositoryProperties(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "fixtures/basic-repository",
+		TerraformDir: fixtureLocation,
+		PlanFilePath: filepath.Join(fixtureLocation, "plan.out"),
 	})
 
 	// Plan the infrastructure
