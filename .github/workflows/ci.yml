@@ -57,7 +57,7 @@ jobs:
       - name: Run Tests
         working-directory: test
         run: |
-          gotestsum --format testname
+          gotestsum --format testname -- -run TestUT_ -v
 
   tag:
     name: Tag version
