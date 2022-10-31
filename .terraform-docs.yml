@@ -2,18 +2,20 @@ formatter: "markdown table" # this is required
 
 version: "0.16"
 
+content: |-
+  {{ .Requirements }}
+  {{ .Providers }}
+  {{ .Modules }}
+  {{ .Resources }}
+  {{ .Inputs }}
+  {{ .Outputs }}
+
 output:
   file: "README.md"
   mode: inject
   template: |-
     <!-- BEGIN_TF_DOCS -->
-    Hello World
-    {{ .Requirements }}
-    {{ .Providers }}
-    {{ .Modules }}
-    {{ .Resources }}
-    {{ .Inputs }}
-    {{ .Outputs }}
+    {{ .Content }}
     <!-- END_TF_DOCS -->    
 
 settings:
