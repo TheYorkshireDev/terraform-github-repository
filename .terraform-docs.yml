@@ -9,7 +9,7 @@ content: |-
 
   ```hcl
   module "example" {
-  {{"\s"}}source  = "<module-path>"
+  {{"\t"}}source  = "<module-path>"
 
   {{- if .Module.RequiredInputs }}
     {{"\n\t"}} # Required variables
