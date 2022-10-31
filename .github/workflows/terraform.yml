@@ -51,10 +51,52 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Render terraform docs inside the README.md and push changes back to PR branch
-        uses: terraform-docs/gh-actions@v1.0.0
-        with:
-          find-dir: .
-          config-file: .terraform-docs.yml
-          git-push: "true"
+      - name: Run terraform validate
+        run: |
+          # Find all tf
+          for project_dir in $(find "." -name '*.tf' -exec dirname {} \; | uniq); do
+              echo "${project_dir}"
+          done
 
+      - name: Update Pull Request
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`aaa\`
+            #### Terraform Initialization ⚙️\`aaaa\`
+            #### Terraform Plan 📖\`aaaa\`
+            #### Terraform Validation 🤖\`aaaa\`
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+      # - name: Render terraform docs inside the README.md and push changes back to PR branch
+      #   uses: terraform-docs/gh-actions@v1.0.0
+      #   with:
+      #     find-dir: .
+      #     config-file: .terraform-docs.yml
+      #     git-push: "true"
+
+# terraform-docs markdown table --config .terraform-docs.yml --output-mode inject --output-file README.md --output-template <!-- BEGIN_TF_DOCS -->
+# {{ .Content }}
+# <!-- END_TF_DOCS --> .
+
+# Find all tf
+# for project_dir in $(find "${INPUT_FIND_DIR}" -name '*.tf' -exec dirname {} \; | uniq); do
+#     update_doc "${project_dir}"
+# done
