@@ -8,6 +8,17 @@ Test Test
 | Name | Version |
 |------|---------|
 | <a name="requirement_github"></a> [github](#requirement\_github) | >= 4.4.0 |
+## Usage
+Basic usage of this module is as follows:
+
+```hcl
+module "example" {
+	source  = "<module-path>"
+
+	 # Required variables
+	name = 
+}
+```
 ## Providers
 
 | Name | Version |
