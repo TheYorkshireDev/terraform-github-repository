@@ -7,6 +7,7 @@ output:
   mode: inject
   template: |-
     <!-- BEGIN_TF_DOCS -->
+    Hello World
     {{ .Requirements }}
     {{ .Providers }}
     {{ .Modules }}
