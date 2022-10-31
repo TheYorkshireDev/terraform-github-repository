@@ -51,15 +51,11 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: docker run
-        run: |
-          docker run --rm --volume "$(pwd):/terraform-docs" -u $(id -u) quay.io/terraform-docs/terraform-docs:0.16.0 markdown /terraform-docs
-
       - name: Render terraform docs inside the README.md and push changes back to PR branch
         uses: terraform-docs/gh-actions@v1.0.0
         with:
-          find-dir: .
+          working-dir: .
           output-file: README.md
-          output-method: print
-          git-push: 'false'
+          output-method: inject
+          git-push: "true"
 
