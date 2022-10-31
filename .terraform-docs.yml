@@ -7,7 +7,12 @@ output:
   mode: inject
   template: |-
     <!-- BEGIN_TF_DOCS -->
-    {{ .Content }}
+    {{ .Requirements }}
+    {{ .Providers }}
+    {{ .Modules }}
+    {{ .Resources }}
+    {{ .Inputs }}
+    {{ .Outputs }}
     <!-- END_TF_DOCS -->    
 
 settings:
