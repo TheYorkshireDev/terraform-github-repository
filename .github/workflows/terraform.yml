@@ -68,8 +68,8 @@ jobs:
           echo "Hello $name"
           echo 'Hello $name'
           echo '"$name" has the value '"$name"
-          echo '"$name" has the value '"$name" >> ${FILE}
-          echo $FILE
+          echo '"$name" has the value '"$name" >> ${aaaa}
+          echo $aaaa
           echo "---"
           echo ::set-output name=locations::'[ ".", "./examples/basic-github-repository", "./test/fixtures/basic-repository" ]'
 
