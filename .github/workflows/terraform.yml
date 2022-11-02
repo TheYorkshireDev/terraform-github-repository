@@ -110,12 +110,14 @@ jobs:
       - my_echo
     strategy:
       matrix:
-        locations: ${{ fromJSON(needs.find_terraform.outputs.terraform_location) }}
+        directory: ${{ fromJSON(needs.find_terraform.outputs.terraform_location) }}
     steps:
-      - name: Matrix => (${{ matrix.locations }}
+      - name: Matrix => (${{ matrix.directory }}
+        working-directory: ${{ matrix.directory }}
         run: |
-          echo ${{ matrix.locations }}
-
+          echo ${{ matrix.directory }}
+          pwd
+          ls
 
         # echo "{location}='${LOCATIONS}'" >> $GITHUB_OUTPUT
 
