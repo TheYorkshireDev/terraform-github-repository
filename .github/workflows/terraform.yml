@@ -56,7 +56,11 @@ jobs:
           echo "---"
           find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u | jq  --raw-input .  | jq --slurp .
           echo "---"
-
+          LOCATIONS='$(find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u | jq  --raw-input .  | jq --slurp .)'
+          echo "---"
+          echo ${LOCATIONS}
+          echo "---"
+          echo ::set-output name=location::${LOCATIONS}
 
   # find-terraform:
   #   runs-on: ubunti-latest
