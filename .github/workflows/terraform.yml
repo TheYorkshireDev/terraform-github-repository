@@ -66,7 +66,7 @@ jobs:
           echo $SERVICES
           echo $VERSIONS
           echo "---"
-          echo "::set-output name=locations::${{format('{0}', $LOCATIONS)}}"
+          echo "::set-output name=locations::${{format('{0}', LOCATIONS)}}"
 
 
 
