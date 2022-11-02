@@ -68,7 +68,7 @@ jobs:
           echo "Hello $name"
           echo 'Hello $name'
           echo '"$name" has the value '"$name"
-          echo '"$name" has the value '"$name"
+          echo '"$name" has the value '"'""$name""'"
           echo "---"
           echo ::set-output name=locations::'[ ".", "./examples/basic-github-repository", "./test/fixtures/basic-repository" ]'
 
