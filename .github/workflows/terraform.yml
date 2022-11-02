@@ -66,7 +66,9 @@ jobs:
           echo '"$name" has the value '"$name"
           echo '"$name" has the value '"'""$name""'"
           echo "---"
-          echo ::set-output name=locations::'[ ".", "./examples/basic-github-repository", "./test/fixtures/basic-repository" ]'
+          echo {locations}="'"$LOCATIONS"'" >> $GITHUB_OUTPUT
+
+#echo ::set-output name=locations::'[ ".", "./examples/basic-github-repository", "./test/fixtures/basic-repository" ]'
 
   my_echo:
     runs-on: ubuntu-latest
