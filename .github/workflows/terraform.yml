@@ -64,12 +64,27 @@ jobs:
           echo "---"
           echo $LOCATIONS
           echo "---"
-          echo "::set-output name=locations::'[ ".", "./examples/basic-github-repository", "./test/fixtures/basic-repository" ]'"
+          echo ::set-output name=locations::'[ ".", "./examples/basic-github-repository", "./test/fixtures/basic-repository" ]'
+
+  my_echo:
+    runs-on: ubuntu-latest
+    needs:
+      - find_terraform
+    steps:
+      - name: Echo previous outputs
+        run: |
+          echo "${{ needs.find_terraform.outputs }}"
+          echo "${{ toJSON(needs.find_terraform.outputs) }}"
+          echo "${{ fromJSON(needs.find_terraform.outputs) }}"
+          echo "${{ needs.find_terraform.outputs.terraform_location }}"
+          echo "${{ toJSON(needs.find_terraform.outputs.terraform_location) }}"
+          echo "${{ fromJSON(needs.find_terraform.outputs.terraform_location) }}"
 
   my_matrix:
     runs-on: ubuntu-latest
     needs:
       - find_terraform
+      - my_echo
     strategy:
       matrix:
         locations: ${{ fromJSON(needs.find_terraform.outputs.terraform_location) }}
