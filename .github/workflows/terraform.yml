@@ -54,19 +54,17 @@ jobs:
         run: |
           find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u
           echo "---"
-          find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u | jq  --raw-input .  | jq --slurp .
+          find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u | jq --raw-input .
+          echo "---"
+          find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u | jq --slurp .
+          echo "---"
+          find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u | jq  --raw-input . | jq --slurp .
           echo "---"
           LOCATIONS=$(find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u | jq  --raw-input .  | jq --slurp .)
           echo "---"
-          echo ${LOCATIONS}
           echo $LOCATIONS
           echo "---"
-          SERVICES='${{ toJSON(github.event.client_payload.services) }}'
-          VERSIONS='${{ toJSON(github.event.client_payload.versions) }}'
-          echo $SERVICES
-          echo $VERSIONS
-          echo "---"
-          echo "::set-output name=locations::${{format('{0}', LOCATIONS)}}"
+          echo "::set-output name=locations::'[ ".", "./examples/basic-github-repository", "./test/fixtures/basic-repository" ]'"
 
 
 
