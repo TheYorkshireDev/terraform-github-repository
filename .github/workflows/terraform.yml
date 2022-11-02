@@ -62,6 +62,7 @@ jobs:
           echo $LOCATIONS
           echo "---"
           echo '$(LOCATIONS)'
+          echo '$LOCATIONS'
           echo "---"
           echo "{location}=${LOCATIONS}" >> $GITHUB_OUTPUT
 
