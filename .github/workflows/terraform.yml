@@ -58,9 +58,12 @@ jobs:
           echo "---"
           LOCATIONS=$(find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u | jq  --raw-input .  | jq --slurp .)
           echo "---"
-          echo '${LOCATIONS}'
+          echo ${LOCATIONS}
+          echo $LOCATIONS
           echo "---"
-          echo "{location}='${LOCATIONS}'" >> $GITHUB_OUTPUT
+          echo '$(LOCATIONS)'
+          echo "---"
+          echo "{location}=${LOCATIONS}" >> $GITHUB_OUTPUT
 
   # find-terraform:
   #   runs-on: ubunti-latest
