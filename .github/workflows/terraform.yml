@@ -64,9 +64,14 @@ jobs:
           SERVICES='${{ toJSON(github.event.client_payload.services) }}'
           VERSIONS='${{ toJSON(github.event.client_payload.versions) }}'
           echo $SERVICES
-          echo $LOCATIONS
+          echo $VERSIONS
           echo "---"
-          echo "{location}='${LOCATIONS}'" >> $GITHUB_OUTPUT
+          echo "::set-output name=locations::${{format('{0}', ${LOCATIONS})}}"
+
+
+
+
+        # echo "{location}='${LOCATIONS}'" >> $GITHUB_OUTPUT
 
   # find-terraform:
   #   runs-on: ubunti-latest
