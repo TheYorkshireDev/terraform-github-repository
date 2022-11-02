@@ -1,32 +1,22 @@
-# terraform-github-repository
-
-Test Test
-
-<!-- BEGIN_TF_DOCS -->
+<!-- BEGIN_AUTOMATED_TF_DOCS_BLOCK -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_github"></a> [github](#requirement\_github) | >= 4.4.0 |
+
 ## Usage
 Basic usage of this module is as follows:
 
 ```hcl
 module "example" {
-	source  = "<module-path>"
+	 source  = "<module-path>"
 
 	 # Required variables
-	name = 
+	 name  = 
 }
 ```
-## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_github"></a> [github](#provider\_github) | >= 4.4.0 |
-## Modules
-
-No modules.
 ## Resources
 
 | Name | Type |
@@ -42,7 +32,4 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_name"></a> [name](#output\_name) | n/a |
-<!-- END_TF_DOCS -->
-
-# Footer
-Test Test
+<!-- END_AUTOMATED_TF_DOCS_BLOCK -->
