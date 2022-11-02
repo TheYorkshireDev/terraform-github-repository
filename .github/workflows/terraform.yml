@@ -44,8 +44,10 @@ jobs:
           tfsec_args: --force-all-dirs
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  find-terraform:
+  find_terraform:
     runs-on: ubuntu-latest
+    outputs:
+      terraform_location: ${{ steps.generate-matrix.outputs.locations }}
     steps:
       - uses: actions/checkout@v3
 
@@ -64,7 +66,17 @@ jobs:
           echo "---"
           echo "::set-output name=locations::'[ ".", "./examples/basic-github-repository", "./test/fixtures/basic-repository" ]'"
 
-
+  my_matrix:
+    runs-on: ubuntu-latest
+    needs:
+      - find_terraform
+    strategy:
+      matrix:
+        locations: ${{ fromJSON(needs.find_terraform.outputs.terraform_location) }}
+    steps:
+      - name: Matrix => (${{ matrix.locations }}
+        run: |
+          echo ${{ matrix.locations }}
 
 
         # echo "{location}='${LOCATIONS}'" >> $GITHUB_OUTPUT
