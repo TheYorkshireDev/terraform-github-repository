@@ -60,15 +60,11 @@ jobs:
           echo "---"
           echo "'"$LOCATIONS"'"
           echo "---"
-          name=World
-          echo "Hello $name"
-          echo 'Hello $name'
-          echo '"$name" has the value '"$name"
-          echo '"$name" has the value '"'""$name""'"
-          echo "---"
-          echo {locations}="'"$LOCATIONS"'" >> $GITHUB_OUTPUT
+          echo ::set-output name=locations::"'"$LOCATIONS"'"
 
-#echo ::set-output name=locations::'[ ".", "./examples/basic-github-repository", "./test/fixtures/basic-repository" ]'
+
+#echo {locations}="'"$LOCATIONS"'" >> $GITHUB_OUTPUT
+# echo ::set-output name=locations::'[ ".", "./examples/basic-github-repository", "./test/fixtures/basic-repository" ]'
 
   my_echo:
     runs-on: ubuntu-latest
