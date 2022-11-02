@@ -4,45 +4,45 @@ on:
   pull_request:
 
 jobs:
-  format:
-    name: Run terraform fmt
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  # format:
+  #   name: Run terraform fmt
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      - uses: hashicorp/setup-terraform@v2
+  #     - uses: hashicorp/setup-terraform@v2
 
-      - name: Run terraform fmt
-        run: |
-          terraform fmt -check -recursive -no-color -diff
+  #     - name: Run terraform fmt
+  #       run: |
+  #         terraform fmt -check -recursive -no-color -diff
 
-  validate:
-    name: Run terraform validate
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  # validate:
+  #   name: Run terraform validate
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      - uses: hashicorp/setup-terraform@v2
+  #     - uses: hashicorp/setup-terraform@v2
 
-      - name: Run terraform validate
-        run: |
-          terraform init -backend=false
-          terraform validate
+  #     - name: Run terraform validate
+  #       run: |
+  #         terraform init -backend=false
+  #         terraform validate
 
-  sec:
-    name: Run tfsec
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  # sec:
+  #   name: Run tfsec
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      - name: Run tfsec
-        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
-        with:
-          tfsec_args: --force-all-dirs
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Run tfsec
+  #       uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
+  #       with:
+  #         tfsec_args: --force-all-dirs
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
 
   find_terraform:
     runs-on: ubuntu-latest
@@ -73,24 +73,22 @@ jobs:
     steps:
       - name: Echo previous outputs
         run: |
-          echo "${{ toJSON(needs.find_terraform.outputs) }}"
-          echo "${{ fromJSON(needs.find_terraform.outputs) }}"
           echo "${{ needs.find_terraform.outputs.terraform_location }}"
           echo "${{ toJSON(needs.find_terraform.outputs.terraform_location) }}"
           echo "${{ fromJSON(needs.find_terraform.outputs.terraform_location) }}"
 
-  my_matrix:
-    runs-on: ubuntu-latest
-    needs:
-      - find_terraform
-      - my_echo
-    strategy:
-      matrix:
-        locations: ${{ fromJSON(needs.find_terraform.outputs.terraform_location) }}
-    steps:
-      - name: Matrix => (${{ matrix.locations }}
-        run: |
-          echo ${{ matrix.locations }}
+  # my_matrix:
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - find_terraform
+  #     - my_echo
+  #   strategy:
+  #     matrix:
+  #       locations: ${{ fromJSON(needs.find_terraform.outputs.terraform_location) }}
+  #   steps:
+  #     - name: Matrix => (${{ matrix.locations }}
+  #       run: |
+  #         echo ${{ matrix.locations }}
 
 
         # echo "{location}='${LOCATIONS}'" >> $GITHUB_OUTPUT
@@ -113,46 +111,46 @@ jobs:
   #         SERVICES='${{ toJSON($(find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u)) }}'
   #         echo ::set-output name=location::${SERVICES}
 
-  docs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
+  # docs:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Run terraform validate
-        run: |
-          # Find all tf
-          for project_dir in $(find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u); do
-              echo "${project_dir}"
-          done
+  #     - name: Run terraform validate
+  #       run: |
+  #         # Find all tf
+  #         for project_dir in $(find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u); do
+  #             echo "${project_dir}"
+  #         done
 
-      - name: Update Pull Request
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const output = `#### Terraform Format and Style 🖌\`aaa\`
-            #### Terraform Initialization ⚙️\`aaaa\`
-            #### Terraform Plan 📖\`aaaa\`
-            #### Terraform Validation 🤖\`aaaa\`
+  #     - name: Update Pull Request
+  #       uses: actions/github-script@v6
+  #       with:
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+  #         script: |
+  #           const output = `#### Terraform Format and Style 🖌\`aaa\`
+  #           #### Terraform Initialization ⚙️\`aaaa\`
+  #           #### Terraform Plan 📖\`aaaa\`
+  #           #### Terraform Validation 🤖\`aaaa\`
 
-            <details><summary>Show Plan</summary>
+  #           <details><summary>Show Plan</summary>
 
-            \`\`\`\n
-            ${process.env.PLAN}
-            \`\`\`
+  #           \`\`\`\n
+  #           ${process.env.PLAN}
+  #           \`\`\`
 
-            </details>
+  #           </details>
 
-            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+  #           *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
 
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
+  #           github.rest.issues.createComment({
+  #             issue_number: context.issue.number,
+  #             owner: context.repo.owner,
+  #             repo: context.repo.repo,
+  #             body: output
+  #           })
 
       # - name: Render terraform docs inside the README.md and push changes back to PR branch
       #   uses: terraform-docs/gh-actions@v1.0.0
