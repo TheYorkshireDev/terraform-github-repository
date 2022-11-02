@@ -45,7 +45,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   find-terraform:
-    runs-on: ubunti-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Generate Matrix
         id: generate-matrix
