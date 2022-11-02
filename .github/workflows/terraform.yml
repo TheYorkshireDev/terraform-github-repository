@@ -73,7 +73,6 @@ jobs:
     steps:
       - name: Echo previous outputs
         run: |
-          echo "${{ needs.find_terraform.outputs }}"
           echo "${{ toJSON(needs.find_terraform.outputs) }}"
           echo "${{ fromJSON(needs.find_terraform.outputs) }}"
           echo "${{ needs.find_terraform.outputs.terraform_location }}"
