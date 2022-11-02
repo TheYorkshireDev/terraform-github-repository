@@ -62,7 +62,14 @@ jobs:
           echo "---"
           LOCATIONS=$(find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u | jq  --raw-input .  | jq --slurp .)
           echo "---"
-          echo ''"$LOCATIONS"''
+          echo $LOCATIONS
+          echo "---"
+          name=World
+          echo "Hello $name"
+          echo 'Hello $name'
+          echo '"$name" has the value '"$name"
+          echo '"$name" has the value '"$name" >> ${FILE}
+          echo $FILE
           echo "---"
           echo ::set-output name=locations::'[ ".", "./examples/basic-github-repository", "./test/fixtures/basic-repository" ]'
 
@@ -76,32 +83,6 @@ jobs:
           echo "${{ needs.find_terraform.outputs.terraform_location }}"
           echo "${{ toJSON(needs.find_terraform.outputs.terraform_location) }}"
           echo "${{ fromJSON(needs.find_terraform.outputs.terraform_location) }}"
-
-  my_matrix1:
-    runs-on: ubuntu-latest
-    needs:
-      - find_terraform
-      - my_echo
-    strategy:
-      matrix:
-        locations: ${{ needs.find_terraform.outputs.terraform_location }}
-    steps:
-      - name: Matrix => (${{ matrix.locations }}
-        run: |
-          echo ${{ matrix.locations }}
-
-  my_matrix2:
-    runs-on: ubuntu-latest
-    needs:
-      - find_terraform
-      - my_echo
-    strategy:
-      matrix:
-        locations: ${{ toJSON(needs.find_terraform.outputs.terraform_location) }}
-    steps:
-      - name: Matrix => (${{ matrix.locations }}
-        run: |
-          echo ${{ matrix.locations }}
 
   my_matrix3:
     runs-on: ubuntu-latest
