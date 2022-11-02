@@ -64,7 +64,7 @@ jobs:
           echo '$(LOCATIONS)'
           echo '$LOCATIONS'
           echo "---"
-          echo "{location}=${LOCATIONS}" >> $GITHUB_OUTPUT
+          echo "{location}='${LOCATIONS}'" >> $GITHUB_OUTPUT
 
   # find-terraform:
   #   runs-on: ubunti-latest
