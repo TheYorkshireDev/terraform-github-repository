@@ -61,8 +61,10 @@ jobs:
           echo ${LOCATIONS}
           echo $LOCATIONS
           echo "---"
-          echo '$(LOCATIONS)'
-          echo '$LOCATIONS'
+          SERVICES='${{ toJSON(github.event.client_payload.services) }}'
+          VERSIONS='${{ toJSON(github.event.client_payload.versions) }}'
+          echo $SERVICES
+          echo $LOCATIONS
           echo "---"
           echo "{location}='${LOCATIONS}'" >> $GITHUB_OUTPUT
 
