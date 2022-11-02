@@ -44,6 +44,24 @@ jobs:
           tfsec_args: --force-all-dirs
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+  find-terraform:
+    runs-on: ubunti-latest
+    outputs:
+      terraform-location: ${{ steps.generate-matrix.outputs.location }}
+    steps:
+      - name: Generate Matrix
+        id: generate-matrix
+        run: |
+          find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u
+          echo "---"
+          find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u | jq  --raw-input .  | jq --slurp .
+          echo "---"
+          ${{ toJSON($(find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u)) }}
+          echo "---"
+          find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u | jq  --raw-input .  | jq --slurp .
+          SERVICES='${{ toJSON($(find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u)) }}'
+          echo ::set-output name=location::${SERVICES}
+
   docs:
     runs-on: ubuntu-latest
     steps:
@@ -54,7 +72,7 @@ jobs:
       - name: Run terraform validate
         run: |
           # Find all tf
-          for project_dir in $(find "." -name '*.tf' -exec dirname {} \; | uniq); do
+          for project_dir in $(find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u); do
               echo "${project_dir}"
           done
 
@@ -97,6 +115,4 @@ jobs:
 # <!-- END_TF_DOCS --> .
 
 # Find all tf
-# for project_dir in $(find "${INPUT_FIND_DIR}" -name '*.tf' -exec dirname {} \; | uniq); do
-#     update_doc "${project_dir}"
-# done
+# find "." -name '*.tf'
