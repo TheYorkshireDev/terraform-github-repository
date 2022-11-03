@@ -14,7 +14,7 @@ jobs:
         with:
           working-dir: .
           indention: 3
-          fail-on-diff: true
+          fail-on-diff: false
           output-method: print
 
       - name: Generate Terraform Docs
