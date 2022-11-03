@@ -1,0 +1,23 @@
+name: Terraform
+
+on:
+  pull_request:
+
+jobs:
+  find_terraform:
+    runs-on: ubuntu-latest
+    outputs:
+      terraform_location: ${{ steps.generate-matrix.outputs.locations }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate Matrix
+        id: generate-matrix
+        run: |
+          LOCATIONS=$(find . -type f -name "*.tf" -exec dirname "{}" \; | sort -u | jq  --raw-input .  | jq --slurp .)
+          echo "---"
+          echo $LOCATIONS
+          echo "---"
+          echo "'"$LOCATIONS"'"
+          echo "---"
+          echo ::set-output name=locations::"'"$LOCATIONS"'"

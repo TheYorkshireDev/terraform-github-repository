@@ -1,38 +1,48 @@
 # terraform-github-repository
 
-Terraform Module for managing GitHub [Repositories](https://developer.github.com/v3/repos/) and associated resources.
+Test Test
 
-## Table of Contents
-
-- [Terraform Module: GitHub Repository](#terraform-module-github-repository)
-  - [Table of Contents](#table-of-contents)
-  - [Requirements](#requirements)
-  - [Dependencies](#dependencies)
-  - [Usage](#usage)
-  - [Notes](#notes)
-  - [Author Information](#author-information)
-  - [License](#license)
-
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-This module requires Terraform version `0.14.0` or newer.
-
-## Dependencies
-
-This module depends on a correctly configured [GitHub Provider](https://www.terraform.io/docs/providers/github/index.html) in your Terraform codebase.
-
+| Name | Version |
+|------|---------|
+| <a name="requirement_github"></a> [github](#requirement\_github) | >= 4.4.0 |
 ## Usage
+Basic usage of this module is as follows:
 
-### Inputs
+```hcl
+module "example" {
+	source  = "<module-path>"
 
-### Outputs
+	 # Required variables
+	name = 
+}
+```
+## Providers
 
-## Notes
+| Name | Version |
+|------|---------|
+| <a name="provider_github"></a> [github](#provider\_github) | >= 4.4.0 |
+## Modules
 
-## Author Information
+No modules.
+## Resources
 
-This module is maintained by the contributors listed on [GitHub](https://github.com/TheYorkshireDev/terraform-github-repository/graphs/contributors).
+| Name | Type |
+|------|------|
+| [github_repository.repository](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository) | resource |
+## Inputs
 
-## License
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_name"></a> [name](#input\_name) | Name of Github Repository | `string` | n/a | yes |
+## Outputs
 
-Licensed under the MIT License.
+| Name | Description |
+|------|-------------|
+| <a name="output_name"></a> [name](#output\_name) | n/a |
+<!-- END_TF_DOCS -->
+
+# Footer
+Test Test
