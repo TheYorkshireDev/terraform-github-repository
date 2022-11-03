@@ -12,9 +12,6 @@ jobs:
       - name: Render terraform docs and push changes back to PR
         uses: terraform-docs/gh-actions@v1.0.0
         with:
-          working-dir: .
-          indention: 3
-          fail-on-diff: false
           output-method: print
 
       - name: Generate Terraform Docs
