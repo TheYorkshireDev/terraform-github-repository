@@ -1,0 +1,24 @@
+name: Terraform
+
+on:
+  pull_request:
+
+jobs:
+  find_terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Render terraform docs and push changes back to PR
+        uses: terraform-docs/gh-actions@v1.0.0
+        with:
+          output-method: print
+
+      - name: Generate Terraform Docs
+        id: terraform-docs
+        run: |
+          for terraform_dir in $(find . -type f -name '*.tf' -exec dirname {} \; | sort -u); do
+            echo "${terraform_dir}"
+          done
+
+
