@@ -13,10 +13,15 @@ jobs:
 
       - name: Install
         run: |
+          echo $GITHUB_PATH
           curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
           tar -xzf terraform-docs.tar.gz
           chmod +x terraform-docs
-          mv terraform-docs $GITHUB_PATH
+          mv terraform-docs ${HOME}/.local/bin
+          echo "${HOME}/.local/bin" >> $GITHUB_PATH
+          echo $GITHUB_PATH
+          which terraform-docs
+          terraform-docs --version
 
       - name: Does This Run Comment
         uses: actions/github-script@v6
