@@ -4,45 +4,45 @@ on:
   pull_request:
 
 jobs:
-  format:
-    name: Run terraform fmt
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  # format:
+  #   name: Run terraform fmt
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      - uses: hashicorp/setup-terraform@v2
+  #     - uses: hashicorp/setup-terraform@v2
 
-      - name: Run terraform fmt
-        run: |
-          terraform fmt -check -recursive -no-color -diff
+  #     - name: Run terraform fmt
+  #       run: |
+  #         terraform fmt -check -recursive -no-color -diff
 
-  validate:
-    name: Run terraform validate
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  # validate:
+  #   name: Run terraform validate
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      - uses: hashicorp/setup-terraform@v2
+  #     - uses: hashicorp/setup-terraform@v2
 
-      - name: Run terraform validate
-        run: |
-          terraform init -backend=false
-          terraform validate
+  #     - name: Run terraform validate
+  #       run: |
+  #         terraform init -backend=false
+  #         terraform validate
 
-  sec:
-    name: Run tfsec
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  # sec:
+  #   name: Run tfsec
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      - name: Run tfsec
-        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
-        with:
-          tfsec_args: --force-all-dirs
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Run tfsec
+  #       uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
+  #       with:
+  #         tfsec_args: --force-all-dirs
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
 
   docs:
     runs-on: ubuntu-latest
@@ -51,10 +51,37 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Render terraform docs inside the README.md and push changes back to PR branch
-        uses: terraform-docs/gh-actions@v1.0.0
+      - name: Update Pull Request
+        uses: actions/github-script@v6
         with:
-          find-dir: .
-          output-file: README.md
-          output-method: print
-          git-push: 'false'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+          #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+          #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+
+          <details><summary>Show Plan</summary>
+
+          \`\`\`\n
+          ${process.env.PLAN}
+          \`\`\`
+
+          </details>
+
+          *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
+
+      # - name: Render terraform docs inside the README.md and push changes back to PR branch
+      #   uses: terraform-docs/gh-actions@v1.0.0
+      #   with:
+      #     find-dir: . # INPUT_FIND_DIR
+      #     output-file: README.md #INPUT_OUTPUT_FILE
+      #     output-method: print # INPUT_OUTPUT_METHOD
+      #     git-push: 'false' # INPUT_GIT_PUSH
