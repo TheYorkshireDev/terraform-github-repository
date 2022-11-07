@@ -12,6 +12,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Install terraform-docs
+        working-directory: /tmp
         run: |
           pwd
           ls
