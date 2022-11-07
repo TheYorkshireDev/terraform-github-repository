@@ -38,15 +38,14 @@ jobs:
 # which terraform-docs
 # terraform-docs --version
 
-
-      # - name: Does This Run Comment
-      #   uses: actions/github-script@v6
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     script: |
-      #       const execSync = require('child_process').execSync;
-      #       const output = execSync('terraform-docs markdown table --indent 2 .', { encoding: 'utf-8' });  // the default is 'buffer'
-      #       console.log(output);
+      - name: Does This Run Comment
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const execSync = require('child_process').execSync;
+            const output = execSync('terraform-docs markdown table --indent 2 .', { encoding: 'utf-8' });  // the default is 'buffer'
+            console.log(output);
 
       # - name: Add Comment
       #   uses: actions/github-script@v6
