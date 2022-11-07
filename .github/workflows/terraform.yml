@@ -19,7 +19,9 @@ jobs:
           tar -xzf terraform-docs.tar.gz
           chmod +x terraform-docs
           ls
-          mv terraform-docs /bin
+          mkdir /custom-bin
+          mv terraform-docs /custom-bin
+          ls /custom-bin
 
 
 
