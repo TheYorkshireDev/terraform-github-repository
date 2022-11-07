@@ -23,6 +23,7 @@ jobs:
             const output = `### ⚠️ Terraform Documentation Outdated
             #### Update \`./README.md\` 📖
             <details><summary>Show Markdown</summary>
+
             \`\`\`
             ## Title1
             ### Subtitle1
@@ -32,19 +33,21 @@ jobs:
 
             #### Update \`./examples/basic-github-repository/README.md\` 📖
             <details><summary>Show Markdown</summary>
+
             \`\`\`
             ## Title2
             ### Subtitle2
-            $plan2
+            ${plan2}
             \`\`\`
             </details>
 
             #### Update \`./test/fixtures/basic-repository/README.md\` 📖
             <details><summary>Show Markdown</summary>
+
             \`\`\`
             ## Title3
             ### Subtitle3
-            $plan3
+            ${plan3}
             \`\`\`
             </details>
             `;
