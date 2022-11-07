@@ -14,12 +14,9 @@ jobs:
       - name: Install terraform-docs
         working-directory: /tmp
         run: |
-          pwd
           curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
           tar -xzf terraform-docs.tar.gz
           chmod +x terraform-docs
-          ls
-          ls /home/runner
           mkdir /home/runner/bin
           mv terraform-docs /home/runner/bin
           ls /home/runner/bin
