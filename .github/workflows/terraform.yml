@@ -20,6 +20,9 @@ jobs:
           mkdir /home/runner/bin
           mv terraform-docs /home/runner/bin
           ls /home/runner/bin
+          echo "/home/runner/bin" >> $GITHUB_PATH
+          which terraform-docs
+          terraform-docs --version
 
 
 
