@@ -11,17 +11,23 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Install
+      - name: Install terraform-docs
         run: |
-            mkdir /home/runner/bin
-            cd /home/runner/bin
-            curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
-            tar -xzf terraform-docs.tar.gz
-            chmod +x terraform-docs
-            echo "/home/runner/bin" >> $GITHUB_PATH
-            cd $GITHUB_WORKSPACE
-            which terraform-docs
-            terraform-docs --version
+          pwd
+          ls
+
+
+
+# mkdir /home/runner/bin
+# cd /home/runner/bin
+# curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
+# tar -xzf terraform-docs.tar.gz
+# chmod +x terraform-docs
+# echo "/home/runner/bin" >> $GITHUB_PATH
+# cd $GITHUB_WORKSPACE
+# which terraform-docs
+# terraform-docs --version
+
 
       # - name: Does This Run Comment
       #   uses: actions/github-script@v6
