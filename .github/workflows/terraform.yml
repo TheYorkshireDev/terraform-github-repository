@@ -13,13 +13,13 @@ jobs:
 
       - name: Install
         run: |
-          echo $GITHUB_PATH
+          ls $GITHUB_WORKSPACE/bin
+          cd $GITHUB_WORKSPACE/bin
           curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
           tar -xzf terraform-docs.tar.gz
           chmod +x terraform-docs
-          mv terraform-docs ${HOME}/.local/bin
-          echo "${HOME}/.local/bin" >> $GITHUB_PATH
-          echo $GITHUB_PATH
+          echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
+          cd $GITHUB_WORKSPACE
           which terraform-docs
           terraform-docs --version
 
