@@ -11,53 +11,69 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Update Pull Request
+      - name: Install
+        run: |
+          curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
+          tar -xzf terraform-docs.tar.gz
+          chmod +x terraform-docs
+          mv terraform-docs $GITHUB_PATH
+
+      - name: Does This Run Comment
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const plan1 = '### TODO1'
-            const plan2 = '### TODO2\nHello World'
-            const plan3 = '### TODO3\n"Hello World"'
+            const execSync = require('child_process').execSync;
+            const output = execSync('terraform-docs markdown table --indent 2 .', { encoding: 'utf-8' });  // the default is 'buffer'
+            console.log(output);
 
-            const output = `### ⚠️ Terraform Documentation Outdated
-            #### Update \`./README.md\` 📖
-            <details><summary>Show Markdown</summary>
+      # - name: Add Comment
+      #   uses: actions/github-script@v6
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     script: |
+      #       const plan1 = '### TODO1'
+      #       const plan2 = '### TODO2\nHello World'
+      #       const plan3 = '### TODO3\n"Hello World"'
 
-            \`\`\`
-            ## Title1
-            ### Subtitle1
-            ${plan1}
-            \`\`\`
-            </details>
+      #       const output = `### ⚠️ Terraform Documentation Outdated
+      #       #### Update \`./README.md\` 📖
+      #       <details><summary>Show Markdown</summary>
 
-            #### Update \`./examples/basic-github-repository/README.md\` 📖
-            <details><summary>Show Markdown</summary>
+      #       \`\`\`
+      #       ## Title1
+      #       ### Subtitle1
+      #       ${plan1}
+      #       \`\`\`
+      #       </details>
 
-            \`\`\`
-            ## Title2
-            ### Subtitle2
-            ${plan2}
-            \`\`\`
-            </details>
+      #       #### Update \`./examples/basic-github-repository/README.md\` 📖
+      #       <details><summary>Show Markdown</summary>
 
-            #### Update \`./test/fixtures/basic-repository/README.md\` 📖
-            <details><summary>Show Markdown</summary>
+      #       \`\`\`
+      #       ## Title2
+      #       ### Subtitle2
+      #       ${plan2}
+      #       \`\`\`
+      #       </details>
 
-            \`\`\`
-            ## Title3
-            ### Subtitle3
-            ${plan3}
-            \`\`\`
-            </details>
-            `;
+      #       #### Update \`./test/fixtures/basic-repository/README.md\` 📖
+      #       <details><summary>Show Markdown</summary>
 
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
+      #       \`\`\`
+      #       ## Title3
+      #       ### Subtitle3
+      #       ${plan3}
+      #       \`\`\`
+      #       </details>
+      #       `;
+
+      #       github.rest.issues.createComment({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: output
+      #       })
 
       # - name: Render terraform docs inside the README.md and push changes back to PR branch
       #   uses: terraform-docs/gh-actions@v1.0.0
