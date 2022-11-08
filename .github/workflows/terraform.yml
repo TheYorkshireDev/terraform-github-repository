@@ -37,12 +37,13 @@ jobs:
 # cd $GITHUB_WORKSPACE
 # which terraform-docs
 # terraform-docs --version
+
       - name: terraform-docs Commenter
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const script = require('./path/to/script.js')
+            const script = require('././github/scripts/commenter.js')
             console.log(script({github, context}))
 
 
