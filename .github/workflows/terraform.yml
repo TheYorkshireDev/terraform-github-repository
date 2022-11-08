@@ -44,7 +44,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const path = require('node:path');
-            const glob = require('glob');
+            //const glob = require('glob');
             const execSync = require('child_process').execSync;
 
             function findTerraformDirectories() {
