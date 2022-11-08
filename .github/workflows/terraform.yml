@@ -22,22 +22,6 @@ jobs:
           ls /home/runner/bin
           echo "/home/runner/bin" >> $GITHUB_PATH
 
-      - name: Test terraform-docs
-        run: |
-          terraform-docs --version
-          which terraform-docs
-
-
-# mkdir /home/runner/bin
-# cd /home/runner/bin
-# curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
-# tar -xzf terraform-docs.tar.gz
-# chmod +x terraform-docs
-# echo "/home/runner/bin" >> $GITHUB_PATH
-# cd $GITHUB_WORKSPACE
-# which terraform-docs
-# terraform-docs --version
-
       - name: terraform-docs Commenter
         uses: actions/github-script@v6
         with:
@@ -47,80 +31,80 @@ jobs:
             console.log(script({github, context}))
 
 
-      - name: Does This Run Comment
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const path = require('node:path');
-            const globa = require('glob');
-            const execSync = require('child_process').execSync;
+      # - name: Does This Run Comment
+      #   uses: actions/github-script@v6
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     script: |
+      #       const path = require('node:path');
+      #       const globa = require('glob');
+      #       const execSync = require('child_process').execSync;
 
-            function findTerraformDirectories() {
-              var directories = []
+      #       function findTerraformDirectories() {
+      #         var directories = []
 
-              let files = []
-              files = globa.sync("**/*.tf", {})
-              files.forEach(file => {
-                var directory = path.dirname(file)
-                if (directories.indexOf(directory) === -1)
-                  directories.push(directory)
-              });
+      #         let files = []
+      #         files = globa.sync("**/*.tf", {})
+      #         files.forEach(file => {
+      #           var directory = path.dirname(file)
+      #           if (directories.indexOf(directory) === -1)
+      #             directories.push(directory)
+      #         });
 
-              return directories.sort()
-            }
+      #         return directories.sort()
+      #       }
 
-            function isDocumentationOutdated(directory) {
-              try {
-                execSync('terraform-docs markdown table --indent 2 --output-check --output-file README.md .', { encoding: 'utf-8' });
-              }
-              catch (err) {
-                return true
-              }
+      #       function isDocumentationOutdated(directory) {
+      #         try {
+      #           execSync('terraform-docs markdown table --indent 2 --output-check --output-file README.md .', { encoding: 'utf-8' });
+      #         }
+      #         catch (err) {
+      #           return true
+      #         }
 
-              return false
-            }
+      #         return false
+      #       }
 
-            function getTerraformDocumentation(directory) {
-              return execSync('terraform-docs markdown table --indent 2 .', { encoding: 'utf-8' });  // the default is 'buffer'
-            }
+      #       function getTerraformDocumentation(directory) {
+      #         return execSync('terraform-docs markdown table --indent 2 .', { encoding: 'utf-8' });  // the default is 'buffer'
+      #       }
 
-            function buildCommentOutput(directory, documentationOutput) {
-              return `#### Update \`${directory}/README.md\` 📖
-            <details><summary>Show Markdown</summary>
+      #       function buildCommentOutput(directory, documentationOutput) {
+      #         return `#### Update \`${directory}/README.md\` 📖
+      #       <details><summary>Show Markdown</summary>
 
-            \`\`\`
-            ${documentationOutput}
-            \`\`\`
-            </details>
-            `;
-            }
+      #       \`\`\`
+      #       ${documentationOutput}
+      #       \`\`\`
+      #       </details>
+      #       `;
+      #       }
 
-            // Run:
-            var directories = findTerraformDirectories();
-            console.log(directories)
+      #       // Run:
+      #       var directories = findTerraformDirectories();
+      #       console.log(directories)
 
-            var commentBody = ``
+      #       var commentBody = ``
 
-            var tempDir = "."
-            if (isDocumentationOutdated(tempDir))
-            {
-              if (commentBody === "")
-              {
-                commentBody += `### ⚠️ Terraform Documentation Outdated
-            `
-              }
+      #       var tempDir = "."
+      #       if (isDocumentationOutdated(tempDir))
+      #       {
+      #         if (commentBody === "")
+      #         {
+      #           commentBody += `### ⚠️ Terraform Documentation Outdated
+      #       `
+      #         }
 
-              readmeDocumentation = getTerraformDocumentation(tempDir)
-              commentBody += buildCommentOutput(tempDir, readmeDocumentation);
-            }
+      #         readmeDocumentation = getTerraformDocumentation(tempDir)
+      #         commentBody += buildCommentOutput(tempDir, readmeDocumentation);
+      #       }
 
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: commentBody
-            })
+            # github.rest.issues.createComment({
+            #   issue_number: context.issue.number,
+            #   owner: context.repo.owner,
+            #   repo: context.repo.repo,
+            #   body: commentBody
+            # })
 
       # - name: Render terraform docs inside the README.md and push changes back to PR branch
       #   uses: terraform-docs/gh-actions@v1.0.0
