@@ -1,12 +1,12 @@
 const path = require('node:path');
-const glob = require('glob');
+const globSearch = require('glob');
 const execSync = require('child_process').execSync;
 
 function findTerraformDirectories() {
   var directories = []
 
   let files = []
-  files = glob.sync("**/*.tf", {})
+  files = globSearch.sync("**/*.tf", {})
   files.forEach(file => {
     var directory = path.dirname(file)
     if (directories.indexOf(directory) === -1)
@@ -18,7 +18,7 @@ function findTerraformDirectories() {
 
 function isDocumentationOutdated(directory) {
   try {
-    execSync('terraform-docs markdown table --indent 2 --output-check --output-file README.md .', { encoding: 'utf-8' });
+    execSync(`terraform-docs markdown table --indent 2 --output-check --output-file README.md ${directory}`, { encoding: 'utf-8' });
   }
   catch (err) {
     return true
@@ -28,7 +28,7 @@ function isDocumentationOutdated(directory) {
 }
 
 function getTerraformDocumentation(directory) {
-  return execSync('terraform-docs markdown table --indent 2 .', { encoding: 'utf-8' });  // the default is 'buffer'
+  return execSync(`terraform-docs markdown table --indent 2 ${directory}`, { encoding: 'utf-8' });  // the default is 'buffer'
 }
 
 function buildCommentOutput(directory, documentationOutput) {
@@ -39,7 +39,20 @@ function buildCommentOutput(directory, documentationOutput) {
 ${documentationOutput}
 \`\`\`
 </details>
+
 `;
+}
+
+function reviewTerraformDocumentation(directory) {
+  if (isDocumentationOutdated(directory)) {
+    if (commentBody === "") {
+      commentBody += `### ⚠️ Terraform Documentation Outdated
+`;
+    }
+
+    readmeDocumentation = getTerraformDocumentation(directory);
+    commentBody += buildCommentOutput(directory, readmeDocumentation);
+  }
 }
 
 // Run:
@@ -48,19 +61,13 @@ console.log(directories)
 
 var commentBody = ``
 
-var tempDir = "."
-if (isDocumentationOutdated(tempDir))
-{
-  if (commentBody === "")
-  {
-    commentBody += `### ⚠️ Terraform Documentation Outdated
-`
-  }
+directories.forEach(directory => {
+  reviewTerraformDocumentation(directory)
+});
 
-  readmeDocumentation = getTerraformDocumentation(tempDir)
-  commentBody += buildCommentOutput(tempDir, readmeDocumentation);
-}
 console.log(commentBody)
+
+
 
 
 
