@@ -63,13 +63,14 @@ Reviewing Directory: ${directory}`)
   // Run:
   var directories = findTerraformDirectories();
 
+  // Exclude test files
+  directories = directories.filter(d => !d.includes("test/"));
+
   var commentBody = ``
 
   directories.forEach(directory => {
     reviewTerraformDocumentation(directory)
   });
-
-  // console.log(commentBody)
 
   github.rest.issues.createComment({
     issue_number: context.issue.number,
