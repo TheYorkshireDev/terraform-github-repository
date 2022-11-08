@@ -1,4 +1,5 @@
 module.exports = ({github, context}) => {
+// module.exports = () => {
   const path = require('node:path');
   const globSearch = require('glob');
   const execSync = require('child_process').execSync;
@@ -45,6 +46,9 @@ ${documentationOutput}
   }
 
   function reviewTerraformDocumentation(directory) {
+    console.log(`
+Reviewing Directory: ${directory}`)
+
     if (isDocumentationOutdated(directory)) {
       if (commentBody === "") {
         commentBody += `### ⚠️ Terraform Documentation Outdated
@@ -64,6 +68,8 @@ ${documentationOutput}
   directories.forEach(directory => {
     reviewTerraformDocumentation(directory)
   });
+
+  // console.log(commentBody)
 
   github.rest.issues.createComment({
     issue_number: context.issue.number,
