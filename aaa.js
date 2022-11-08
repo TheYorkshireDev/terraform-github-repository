@@ -2,17 +2,52 @@ const path = require('node:path');
 const glob = require('glob');
 const execSync = require('child_process').execSync;
 
-var directories = []
+function findTerraformDirectories() {
+  var directories = []
 
-let files = []
-files = glob.sync("**/*.tf", {})
-console.log(files)
-files.forEach(file => {
-  var directory = path.dirname(file)
-  if (directories.indexOf(directory) === -1)
-    directories.push(directory)
-});
-console.log(directories.sort())
+  let files = []
+  files = glob.sync("**/*.tf", {})
+  files.forEach(file => {
+    var directory = path.dirname(file)
+    if (directories.indexOf(directory) === -1)
+      directories.push(directory)
+  });
+
+  return directories.sort()
+}
+
+function isDocumentationOutdated(directory) {
+  try {
+    execSync('terraform-docs markdown table --indent 2 --output-check --output-file README.md .', { encoding: 'utf-8' });
+  }
+  catch (err) {
+    return true
+  }
+
+  return false
+}
+
+function reviewTerraformDocumentation(directory) {
+  return execSync('terraform-docs markdown table --indent 2 --output-file README.md .', { encoding: 'utf-8' });  // the default is 'buffer'
+}
+
+// Run:
+var directories = findTerraformDirectories();
+console.log(directories)
+
+var commentBody = ""
+
+var tempDir = "."
+if (isDocumentationOutdated(tempDir))
+{
+  if (commentBody === "")
+  {
+    
+  }
+}
+var output = reviewTerraformDocumentation();
+
+
 
 try {
   execSync('terraform-docs markdown table --indent 2 --output-check --output-file README.md .', { encoding: 'utf-8' });

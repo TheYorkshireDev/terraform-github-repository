@@ -46,7 +46,9 @@ jobs:
             const execSync = require('child_process').execSync;
             const output = execSync('terraform-docs markdown table --indent 2 .', { encoding: 'utf-8' });  // the default is 'buffer'
 
-            var commentBody = `### ⚠️ Terraform Documentation Outdated
+            var commentBody = `### ⚠️ Terraform Documentation Outdated`
+
+            var commentBody += `
             #### Update \`./README.md\` 📖
             <details><summary>Show Markdown</summary>
 
