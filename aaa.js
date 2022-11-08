@@ -27,36 +27,55 @@ function isDocumentationOutdated(directory) {
   return false
 }
 
-function reviewTerraformDocumentation(directory) {
-  return execSync('terraform-docs markdown table --indent 2 --output-file README.md .', { encoding: 'utf-8' });  // the default is 'buffer'
+function getTerraformDocumentation(directory) {
+  return execSync('terraform-docs markdown table --indent 2 .', { encoding: 'utf-8' });  // the default is 'buffer'
+}
+
+function buildCommentOutput(directory, documentationOutput) {
+  return `#### Update \`${directory}/README.md\` 📖
+<details><summary>Show Markdown</summary>
+
+\`\`\`
+${documentationOutput}
+\`\`\`
+</details>
+`;
 }
 
 // Run:
 var directories = findTerraformDirectories();
 console.log(directories)
 
-var commentBody = ""
+var commentBody = ``
 
 var tempDir = "."
 if (isDocumentationOutdated(tempDir))
 {
   if (commentBody === "")
   {
-    
+    commentBody += `### ⚠️ Terraform Documentation Outdated
+`
   }
+
+  readmeDocumentation = getTerraformDocumentation(tempDir)
+  commentBody += buildCommentOutput(tempDir, readmeDocumentation);
 }
-var output = reviewTerraformDocumentation();
+console.log(commentBody)
 
 
 
-try {
-  execSync('terraform-docs markdown table --indent 2 --output-check --output-file README.md .', { encoding: 'utf-8' });
-}
-catch (err) {
-  console.log("README.md is out of date")
-  const output = execSync('terraform-docs markdown table --indent 2 --output-file README.md .', { encoding: 'utf-8' });  // the default is 'buffer'
-  console.log(output);
-}
+// var output = reviewTerraformDocumentation();
+
+
+
+// try {
+//   execSync('terraform-docs markdown table --indent 2 --output-check --output-file README.md .', { encoding: 'utf-8' });
+// }
+// catch (err) {
+//   console.log("README.md is out of date")
+//   const output = execSync('terraform-docs markdown table --indent 2 --output-file README.md .', { encoding: 'utf-8' });  // the default is 'buffer'
+//   console.log(output);
+// }
 
 // const isValid = execSync('terraform-docs markdown table --indent 2 --output-check --output-file README.md .', { encoding: 'utf-8' });  // the default is 'buffer'
 // console.log(isValid)
