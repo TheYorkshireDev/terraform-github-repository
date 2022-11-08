@@ -1,0 +1,31 @@
+name: Terraform
+
+on:
+  pull_request:
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Install terraform-docs
+        working-directory: /tmp
+        run: |
+          curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
+          tar -xzf terraform-docs.tar.gz
+          chmod +x terraform-docs
+          mkdir /home/runner/bin
+          mv terraform-docs /home/runner/bin
+          ls /home/runner/bin
+          echo "/home/runner/bin" >> $GITHUB_PATH
+
+      - name: terraform-docs Commenter
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const script = require('./.github/scripts/commenter.js')
+            script({github, context})
