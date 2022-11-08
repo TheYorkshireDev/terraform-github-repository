@@ -44,14 +44,14 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const path = require('node:path');
-            //const glob = require('glob');
+            const globa = require('glob');
             const execSync = require('child_process').execSync;
 
             function findTerraformDirectories() {
               var directories = []
 
               let files = []
-              files = glob.sync("**/*.tf", {})
+              files = globa.sync("**/*.tf", {})
               files.forEach(file => {
                 var directory = path.dirname(file)
                 if (directories.indexOf(directory) === -1)
