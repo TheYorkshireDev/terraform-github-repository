@@ -38,9 +38,9 @@ module.exports = ({github, context}) => {
 <details><summary>Show Markdown</summary>
 
 \`\`\`
-<!-- BEGIN_TF_DOCS -->
+\<\!\-\- BEGIN_TF_DOCS \-\-\>
 ${documentationOutput}
-<!-- END_TF_DOCS -->
+\<\!\-\- END_TF_DOCS \-\-\>
 \`\`\`
 </details>
 
