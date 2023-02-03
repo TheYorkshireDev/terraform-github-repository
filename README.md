@@ -40,6 +40,7 @@ This module is maintained by the contributors listed on [GitHub](https://github.
 Licensed under the MIT License.
 
 <!-- BEGIN_TF_DOCS -->
+
 ## Requirements
 
 | Name | Version |
