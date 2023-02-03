@@ -40,7 +40,7 @@ You will see a plan of the changes and Terraform will prompt you for approval to
 Run `terraform destroy` to destroy all resources again.
 
 <!-- BEGIN_TF_DOCS -->
-## Requirements
+
 
 | Name | Version |
 |------|---------|
