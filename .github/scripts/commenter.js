@@ -38,7 +38,9 @@ module.exports = ({github, context}) => {
 <details><summary>Show Markdown</summary>
 
 \`\`\`
+<!-- BEGIN_TF_DOCS -->
 ${documentationOutput}
+<!-- END_TF_DOCS -->
 \`\`\`
 </details>
 
@@ -54,7 +56,7 @@ Reviewing Directory: ${directory}`)
         commentBody += `### ⚠️ Terraform Documentation Outdated
 `;
       }
-  
+
       readmeDocumentation = getTerraformDocumentation(directory);
       commentBody += buildCommentOutput(directory, readmeDocumentation);
     }
